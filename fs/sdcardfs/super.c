@@ -121,6 +121,8 @@ static int sdcardfs_remount_fs(struct super_block *sb, int *flags, char *options
 		err = -EINVAL;
 	}
 
+	sync_filesystem(sb);
+
 	return err;
 }
 
@@ -147,6 +149,7 @@ static int sdcardfs_remount_fs2(struct vfsmount *mnt, struct super_block *sb,
 	pr_info("Remount options were %s for vfsmnt %p.\n", options, mnt);
 	err = parse_options_remount(sb, options, *flags & ~MS_SILENT, mnt->data);
 
+	sync_filesystem(sb);
 
 	return err;
 }
